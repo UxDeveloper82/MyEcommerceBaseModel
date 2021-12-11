@@ -1,20 +1,10 @@
 ﻿@model MyEcommerceBaseModel.Models.Products
 
-@{ ViewData["Title"] = "Details"; }
-
-@using MyEcommerceBaseModel.Utility
-@using Microsoft.AspNetCore.Http
-@inject IHttpContextAccessor HttpContextAccessor
-@{ List<Products> products = HttpContextAccessor.HttpContext.Session.Get<List<Products>>("products");
-    Products product = null;
-    if (products != null)
-    {
-        product = products.FirstOrDefault(c => c.Id == Model.Id);
-    } }
-
+@{ ViewData["Title"] = "Delete"; }
 <br />
-<h2 class="text-info">Product Details</h2>
-<form asp-action="Detail" method="post" enctype="multipart/form-data">
+
+<h2 class="text-info">Product Delete</h2>
+<form asp-action="Delete" method="post" enctype="multipart/form-data">
     <div class="p-4 rounded border row">
         <div asp-validation-summary="ModelOnly" class="text-danger">
 
@@ -53,7 +43,7 @@
                     <label asp-for="ProductColor"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="ProductColor" readonly="readonly" class="form-control" />
+                    <input asp-for="ProductColor" readonly="readonly" readonly="readonly" class="form-control" />
                 </div>
                 <span asp-validation-for="ProductColor" class="text-danger"></span>
             </div>
@@ -63,43 +53,38 @@
                 </div>
                 <div class="col-8">
                     @*<select asp-for="ProductTypeId" asp-items="ViewBag.productTypeId" class="form-control"></select>*@
-                    <input asp-for="ProductTypes.ProductType" readonly="readonly" class="form-control" />
+                    <input asp-for="ProductTypeId" readonly="readonly" class="form-control" />
                 </div>
                 <span asp-validation-for="ProductTypeId" class="text-danger"></span>
             </div>
-
             <div class="form-group row">
                 <div class="col-4">
-
+                    <label asp-for="SpecialTagId"></label>
                 </div>
                 <div class="col-8">
-                    <input type="submit" class="btn btn-info form-control" value="Add to Cart" />
+                    @*<select asp-for="SpecialTagId" asp-items="ViewBag.TagId" class="form-control"></select>*@
+                    <input asp-for="SpecialTagId" readonly="readonly" class="form-control" />
                 </div>
-                @*<div class="col-8">
-                        @if (product != null)
-                        {
-                            <button type="submit" class="btn btn-danger form-control" asp-action="Remove" asp-route-id="@Model.Id">Remove to Cart</button> }
-                        else
-                        {
-                            <input type="submit" class="btn btn-info form-control" value="Add to Cart" />}
-
-                    </div>*@
-
+                <span asp-validation-for="SpecialTagId" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="IsAvailable"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="IsAvailable" disabled="disabled" class="" type="checkbox" />
+                </div>
+                <span asp-validation-for="IsAvailable" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <h3>Do you want to delete this product ?</h3>
+                <input type="submit" asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger" value="Delete" />
                 <a asp-action="Index" class="btn btn-success">Back to List</a>
             </div>
         </div>
         <div class="col-1"></div>
         <div class="col-3">
             <img src="~/@Model.Image" width="100%" height="250px" style="border-radius: 5px;border: 1px solid #efefef" />
-            @if (Model.IsAvailable)
-            {
-                <img src="~/Images/instock-logo.png" width="200px" height="50px" /> }
-            else
-            {
-                <img src="~/Images/notinstock.jpg" width="200px" height="50px" />}
-
         </div>
 
     </div>
@@ -108,3 +93,4 @@
 @section Scripts{
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
