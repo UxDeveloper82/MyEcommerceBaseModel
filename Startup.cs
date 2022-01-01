@@ -36,7 +36,7 @@ namespace MyEcommerceBaseModel
                 options.Cookie.IsEssential = true;
             });
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
+                options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
